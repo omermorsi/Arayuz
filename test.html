@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style>
+        .btn {
+            width: 32%;
+            height: 75px;
+            text-align: center;
+            font-size = 5%;
+            background-color:#00CED1;
+            color:white;
+          
+        }
+
+        .my-text {
+            font-size: 5px;
+            //padding: 10px;
+        }
+
+        .my-div {
+            margin-top: 15px;
+            
+        }
+    </style>
+
+    <title>EDUCATION ROBOT WEB SERVER</title>
+</head>
+
+<body oncontextmenu="return false" onselectstart="return false" ondragstart="return false">
+    <div class="container">
+       
+            <div class="col-md-12 col-xs-12">
+                
+
+                <div class="col-md-12 col-xs-12" >
+                   <b><hr> <h2 class="text-center"style=" margin-bottom:10px; font-size:25px; color:	#DCE775;">LOAD CONTROL UNIT</h2><hr></b>
+                </div>
+                
+                <div class="row" align="center">
+
+                  <div class="col-md-12 col-xs-12">
+                      <button onclick="sendData(1, 1)"  style = "  margin-bottom:10px; " type="button" class="btn btn-primary" >UP</button>
+                  </div>
+               
+                  <button style = " margin-bottom:10px; " type="button" class="btn btn-warning"><a href="/omer">Omer</a></button>
+                  <div class="col-md-12 col-xs-12">
+                      <button onclick="sendData(2, 1),getData()"  style = " margin-bottom:10px; " type="button" class="btn btn-warning">SPEED UP</button>
+                      <button onclick="sendData(3, 1)"  style = " margin-bottom:10px;  " type="button" class="btn btn-warning">STOP</button>
+                      <button onclick="sendData(4, 1),getData()"  style = " margin-bottom:10px; " type="button" class="btn btn-warning">SPEED DOWN</button>
+                  </div>
+                
+                  <div class="col-md-12 col-xs-12" align="center">
+                        <button onclick="sendData(5, 1)" style = "  margin-bottom:10px; " type="button" class="btn btn-primary" >DOWN</button>
+                  </div>
+
+                </div>
+
+                <div class="col-md-12 col-xs-12">
+                    
+                    <div class="col-md-12 col-sm-12 text-center my-text" style=" font-size:15px;">
+                        MOTOR SPEED LEVEL: <span id="adcVal">---</span>
+                    </div>
+
+                </div>
+              
+                
+                
+                  <div class="col-md-12 col-xs-12" >
+                    <b><hr></b><h2 class="text-center" style=" margin-bottom:10px; font-size:25px; color:#DCE775;">TURN CONTROL UNIT</h2><b><hr></b>
+                  </div>
+                
+               
+
+                <div class="row" align="center">
+                  
+                  <div class="col-md-12 col-xs-12" >
+                      <button onclick="sendData(6, 1)"  style = " margin-bottom:10px; " type="button" class="btn btn-warning">LEFT</button>
+                      <button onclick="sendData(7, 1)" style = " margin-bottom:10px; " type="button" class="btn btn-warning">STOP    </button>
+                      <button onclick="sendData(8, 1)"   style = " margin-bottom:10px; " type="button" class="btn btn-warning">RIGHT</button>
+                  </div>
+
+                  <div class="col-md-12 col-xs-12">
+                      <button onclick="sendData(9, 1)" style = "  margin-bottom:10px; height:75px;" type="button" class="btn btn-primary" >START POİNT</button>
+                  </div>
+
+                </div>
+                
+            </div>
+
+    </div>
+
+   
+
+    <script>
+
+        function sendData(ButNum, TaskNum, InpVal) {
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("ledStat").innerHTML =
+                        this.responseText;
+                }
+            };
+            xhttp.open("GET", "Set?ButtonNumber=" + ButNum + "&TaskNumber=" + ButState + "&InputValue=" + InpVal, true);
+            xhttp.send();
+        }
+
+        setInterval(function () {
+            // Call a function repetatively with 2 Second interval
+            getData();
+        }, 1000); //2000mSeconds update rate
+        
+        function getData() {
+            
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("adcVal").innerHTML =
+                        this.responseText;
+                    console.log(this.responseText);
+                }
+            };
+            xhttp.open("GET", "readADC", true);
+            xhttp.send();
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

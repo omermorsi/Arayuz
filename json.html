@@ -1,0 +1,226 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Document</title>
+
+    <style>
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px 0 30px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        button, input {
+            width: 50%;
+            margin: 10px auto;
+            color: #0dcaf0;
+            border: 1px solid #0dcaf0;
+            display: inline-block;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            vertical-align: middle;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        input{
+            padding: 6px;
+            width: 45%;
+            margin-bottom: 1px;
+        } 
+        button:hover {
+            color: #000;
+            background-color: #0dcaf0;
+            border: 1px solid #0dcaf0;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            right: 0;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="options" id="devices">
+
+    <section class="devices">
+        <div class="container">
+            <h1>Cihazlari tespit et</h1>
+
+            <div class="options" id="no">
+                
+            </div>
+            <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <section class="options">
+                        <div class="container">
+                            <h1>ESP32 Kontrol sayfasi</h1>
+                            
+                            <div class="options" id="options">
+                                <input type="hidden" name="" id="did">
+                                <input type="text" name="" id="ydid" value="0">
+                                <button type="button" id="1">DID atama</button>
+                                <input type="hidden" name="" id="uid">
+                                <input type="text" name="" id="yuid" value="0">
+                                <button type="button" id="2">UID atama</button>
+                                <button type="button" id="3">Kendini goster</button>
+                                <button type="button" id="4">Display yonu</button>
+                                <button type="button" id="5">Yazilim guncelle</button>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <script>
+
+
+
+        function getData() {
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var uid1 = "01";
+var uid2 = "02";
+var uid3 = "03";
+
+var did1 = "0001";
+var did2 = "0002";
+var did3 = "0003";
+
+  var m = uid1 + "," + did1 +  "/" + uid2 + "," + did2 +  "/" + uid3 + "," + did3; 
+
+            var devices = m;
+            
+            var device = devices.split("/");
+            for (let i = 0; i < device.length; i++) {
+                 deviceUid = device[i].split(",");
+    
+            }
+           
+            
+
+            for (let i = 0; i < device.length; i++) {
+                var but = document.createElement("button");
+                for (let j = 0; j < device.length; j++) {
+                var deviceUid = device[i].split(",");
+                but.id = deviceUid[1];
+                but.setAttribute("onclick", "openss(this.id)");
+            
+                var butpar = document.getElementById("no");
+                butpar.appendChild(but);
+                document.getElementById(deviceUid[1]).innerHTML = "UID = " + deviceUid[1] + "<br>" + "DID = " + deviceUid[0];
+
+            } 
+            };
+        }
+        };
+        xhttp.open("GET", "readADC", true);
+        xhttp.send();
+        }
+        getData();
+
+function openss(button){
+
+    document.getElementById("myModal").style.display = "block";
+  document.getElementById("did").value = button;
+}
+        window.onload = function () {
+            modal = document.getElementById("myModal");
+            let span = document.getElementsByClassName("close")[0];
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
+
+
+
+        document.getElementById("options").querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                let uid = document.getElementById("uid").value;
+                let yuid = document.getElementById("yuid").value;
+                sendData(uid, button.id, yuid);
+            });
+        });
+
+       
+
+        function sendData(Uid, TaskNum, InpVal) {
+            var xhttp = new XMLHttpRequest();
+
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    
+                        console.log(this.responseText);
+                }
+            };
+            xhttp.open("GET", "set?Uid=" + Uid + "&TaskNumber=" + TaskNum + "&InputValue=" + InpVal, true);
+            xhttp.send();
+            
+
+        }
+    </script>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konfigrasyon</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            padding: 30px 0 30px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        nav,
+        footer {
+            background-color: #353b45;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        footer {
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 17px;
+            color: #fff;
+            justify-content: center;
+        }
+
+        nav button {
+            width: 100px;
+            color: #fff !important;
+            border: 1px solid #fff !important;
+            background-color: #353b45;
+            font-size: 1.2em;
+            padding: 5px;
+            margin: 15px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        button,
+        a {
+            width: 50%;
+            margin: 10px auto;
+            color: #0dcaf0;
+            border: 1px solid #0dcaf0;
+            display: inline-block;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            vertical-align: middle;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover,
+        a:hover {
+            color: #000;
+            background-color: #0dcaf0;
+            border: 1px solid #0dcaf0;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <button onclick="history.back()">&#60 -</button> <!-- Go back-->
+        <button onclick="history.forward()">- &#62</button> <!-- Go forward -->
+    </nav>
+    <section class="options">
+        <div class="container">
+            <h1>ID atama</h1>
+            <div class="options">
+                <a onclick="sendData(0, 8, 0)">DID atama</a>
+                <a onclick="sendData(0, 9, 0)">UID atama</a>
+                <a onclick="sendData(0, 10, 0)">Display degistirme</a>
+            </div>
+        </div>
+    </section>
+    <footer>T3 Otomasyon &#169; Tüm haklar saklıdır.</footer>
+    <script>
+        //Send data to server
+        function sendData(Uid, TaskNum, InpVal) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    console.log(this.responseText);
+                }
+            };
+            xhttp.open("GET", "set?Uid=" + Uid + "&TaskNumber=" + TaskNum + "&InputValue=" + InpVal, true);
+            xhttp.send();
+        }
+    </script>
+</body>
+
+</html>
