@@ -3,14 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Konfigrasyon</title>
     <style>
         body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         * {
@@ -24,7 +21,7 @@
 
         h1 {
             text-align: center;
-            padding: 30px 0 30px;
+            padding: 20px 0;
         }
 
         a {
@@ -43,7 +40,7 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            padding: 17px;
+            padding: 15px;
             color: #fff;
             justify-content: center;
         }
@@ -58,20 +55,11 @@
             margin: 15px;
         }
 
-        .options {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
         button,
-        a {
-            width: 50%;
-            margin: 10px auto;
+        a,
+        input {
             color: #0dcaf0;
             border: 1px solid #0dcaf0;
-            display: inline-block;
-            padding: 20px;
             text-align: center;
             text-decoration: none;
             vertical-align: middle;
@@ -85,7 +73,70 @@
             background-color: #0dcaf0;
             border: 1px solid #0dcaf0;
         }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom: 100px;
+        }
+
+        .links>* {
+            width: 90%;
+            margin: 10px 5%;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        .group {
+            border: 1px solid #00dcff40;
+            text-align: center;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .group>* {
+            margin: 5px 0;
+            width: 98%;
+            padding: 10px;
+        }
+
+        #sayfa {
+            padding: 3px;
+            text-align: start;
+        }
+
+        .dis {
+            display: inline-block;
+            width: auto;
+        }
+
+        @media only screen and (min-width: 500px) {
+            .links {
+                flex-direction: row;
+            }
+
+            .links>* {
+                width: 98%;
+                margin: 10px 1%;
+                padding: 5px;
+                overflow: hidden;
+            }
+
+            .group {
+                flex-direction: column;
+                margin-bottom: 5px;
+                padding: 15px;
+            }
+
+            .group>* {
+                padding: 10px;
+            }
+        }
     </style>
+
 </head>
 
 <body>
@@ -93,30 +144,102 @@
         <button onclick="history.back()">&#60 -</button> <!-- Go back-->
         <button onclick="history.forward()">- &#62</button> <!-- Go forward -->
     </nav>
-    <section class="options">
+    <section>
         <div class="container">
             <h1>ID atama</h1>
-            <div class="options">
-                <a onclick="sendData(0, 8, 0)">DID atama</a>
-                <a onclick="sendData(0, 9, 0)">UID atama</a>
-                <a onclick="sendData(0, 10, 0)">Display degistirme</a>
+            <div class="links">
+                <div class="group">
+                    <input type="text" name="" id="ydid" class="vin">
+                    <button id="9">DID atama</button>
+                    <span>Atanacak device Id <span id="aDeviceId">0</span></span>
+                    <button class="iptal" onclick="sendData(0,0,10,0)">iptal</button>
+                </div>
+                <div class="group">
+                    <input type="text" name="" id="yuid" class="vin">
+                    <button id="11">UID atama</button>
+                    <span>Atanacak unique Id <span id="aUniqueId">0</span></span>
+                    <button class="iptal" onclick="sendData(0,0,12,0)">iptal</button>
+                </div>
+                <div class="group">
+                    Ters et <input class="dis" type="checkbox" name="" id="dyonu">
+                    <button id="13">Display degistirme</button>
+                </div>
+                <div class="group">
+                    <button type="button" id="14" onclick="sendData(0,0,14,0)">hepsini resetleme</button>
+                </div>
             </div>
         </div>
     </section>
     <footer>T3 Otomasyon &#169; Tüm haklar saklıdır.</footer>
     <script>
+
+        function getData() {
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+
+                if (this.readyState == 4 && this.status == 200) {
+
+                    var devicesList = this.responseText;
+                    console.log(this.responseText);
+                    var devices = devicesList.split(".");
+                    if (devices[0] == '8') {
+                        document.getElementById("aDeviceId").innerHTML = devices[1];
+                    } else if (devices[0] == '10') {
+                        document.getElementById("aUniqueId").innerHTML = devices[1];
+                    }
+
+                }
+            };
+            xhttp.open("GET", "readADC", true);
+            xhttp.send();
+        }
+
+
+        getData(); //Call getData()
+        setInterval(function () { getData() }, 1000);
+
+
+        //Call sendData()
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', () => {
+                let yuid = document.getElementById("yuid").value; //Get new unique Id
+                let ydid = document.getElementById("ydid").value; //Get new new device Id
+                let dyonu = document.getElementById("dyonu").value; //Get new new device Id
+
+
+                if (button.id == 9) { //When device Id is changed
+                    sendData(0, 0, 9, ydid);
+
+                } else if (button.id == 11) { //When unique Id is changed
+                    sendData(0, 0, 11, yuid);
+                } else if (button.id == 13) { //When unique Id is changed
+                    if (dyonu == on) {
+                        sendData(0, 0, 13, 0);
+                    } else {
+                        sendData(0, 0, 13, 1);
+                    }
+
+                } else {
+                    console.log("gecerli butun degil");
+                }
+
+            });
+        });
+
         //Send data to server
-        function sendData(Uid, TaskNum, InpVal) {
+        function sendData(Uid, Did, TaskNum, InpVal) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     console.log(this.responseText);
                 }
             };
-            xhttp.open("GET", "set?Uid=" + Uid + "&TaskNumber=" + TaskNum + "&InputValue=" + InpVal, true);
+            xhttp.open("GET", "set?Uid=" + Uid + "&Did=" + Did + "&TaskNumber=" + TaskNum + "&InputValue=" + InpVal, true);
             xhttp.send();
         }
+
     </script>
+
 </body>
 
 </html>

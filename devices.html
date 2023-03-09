@@ -3,8 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cihazlar</title>
     <style>
         body {
@@ -23,18 +21,11 @@
 
         h1 {
             text-align: center;
-            padding: 30px 0 30px;
+            padding: 20px 0;
         }
 
         a {
             text-decoration: none;
-        }
-
-        /* Container of button */
-        .group {
-            border: 1px solid #00dcff40;
-            text-align: center;
-            margin-bottom: 10px;
         }
 
         nav,
@@ -49,47 +40,31 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            padding: 17px;
+            padding: 15px;
             color: #fff;
-            font-size: 1.3em;
             justify-content: center;
         }
 
         nav button {
-            width: 100px !important;
+            width: 100px;
             color: #fff !important;
             border: 1px solid #fff !important;
-            background-color: #353b45 !important;
-            font-size: 1.8em !important;
-            padding: 5px !important;
-            margin: 15px !important;
-        }
-
-        /* Buttons */
-        .options {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+            background-color: #353b45;
+            font-size: 1.2em;
+            padding: 5px;
+            margin: 15px;
         }
 
         button,
         a,
         input {
-            width: 50%;
-            margin: 10px auto;
             color: #0dcaf0;
             border: 1px solid #0dcaf0;
-            display: inline-block;
-            padding: 20px;
             text-align: center;
             text-decoration: none;
             vertical-align: middle;
             cursor: pointer;
             border-radius: 5px;
-        }
-
-        .options button {
-            width: 70%;
         }
 
         button:hover,
@@ -99,7 +74,79 @@
             border: 1px solid #0dcaf0;
         }
 
-        /* Modal */
+        .links {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-bottom: 100px;
+        }
+
+        .links>* {
+            width: 90%;
+            margin: 10px 5%;
+            padding: 15px;
+            overflow: hidden;
+        }
+
+        .group {
+            border: 1px solid #00dcff40;
+            text-align: center;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .group>* {
+            margin: 5px 0;
+            width: 98%;
+            padding: 15px;
+        }
+
+        #sayfa {
+            padding: 3px;
+            text-align: start;
+        }
+
+        .dis {
+            display: inline-block;
+            width: auto;
+        }
+
+        @media only screen and (min-width: 500px) {
+            .links{
+                flex-direction: row;
+            }
+
+            .modal-content .links {
+                flex-direction: column;
+            }
+
+
+
+            .links>* {
+                width: 98%;
+                margin: 10px 1%;
+                padding: 10px;
+                overflow: hidden;
+            }
+
+            .group {
+                flex-direction: column;
+                margin-bottom: 5px;
+                padding: 15px;
+            }
+
+            .group>* {
+                padding: 15px;
+            }
+            .modal-content{
+                width: 50% !important;
+                padding: 20px;
+
+            }
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -114,18 +161,15 @@
             background-color: rgba(0, 0, 0, 0.4);
         }
 
-        /* Modal content */
         .modal-content {
             background-color: #fefefe;
             margin: auto;
-            padding: 20px;
             border: 1px solid #888;
-            width: 80%;
+            width: 85%;
             max-height: calc(100vh - 210px);
             overflow-y: auto;
         }
 
-        /* Exit key */
         .close {
             color: #aaaaaa;
             float: right;
@@ -139,12 +183,6 @@
             text-decoration: none;
             cursor: pointer;
         }
-
-        input {
-            padding: 6px;
-            width: 45%;
-            margin-bottom: 1px;
-        }
     </style>
 </head>
 
@@ -155,38 +193,53 @@
     </nav>
     <section class="devices">
         <div class="container">
-            <h1>Cihazlari tespit et</h1>
-            <div class="options" id="no"></div> <!-- Modal's button-->
+            <h1 id="t">Cihazlari tespit et</h1>
+            <div class="links" id="no"></div> <!-- Modal's button-->
             <div id="myModal" class="modal"> <!-- Modal -->
                 <div class="modal-content">
                     <span class="close">&times;</span><!-- Exit key -->
-                    <section class="options">
-                        <div class="container">
+                    
+                        <div class="">
                             <h1 id="devicehead"></h1>
-                            <div class="options" id="options">
+                            <h3 id="bildir"></h3>
+                            <div class="links" id="options">
                                 <div class="group">
                                     <input type="hidden" name="" id="did">
-                                    <input type="text" name="" id="ydid" value="0">
-                                    <button type="button" id="1">DID atama</button>
-                                </div>
-                                <div class="group">
                                     <input type="hidden" name="" id="uid">
-                                    <input type="text" name="" id="yuid" value="0">
-                                    <button type="button" id="2">UID atama</button>
+                                    <input type="text" name="" id="ydid" value="0">
+                                    <button type="button" id="2">DID atama</button>
                                 </div>
                                 <div class="group">
-                                    <button type="button" id="3">Kendini goster</button>
+                                BS801<input type="radio" name="btip" value="1" style="width:auto">
+                                TPP<input type="radio" name="btip" value="2" style="width:auto">
+                
+                                    <button type="button" id="3">Butunun tipini degistir</button>
+                                </div>
+                                <div class="group">
+                                    <button type="button" id="4">Kendini goster</button>
                                 </div>
                                 <div class="group">
                                     <input type="checkbox" name="" id="dyonu">
-                                    <button type="button" id="4">Display yonu</button>
+                                    <button type="button" id="5">Display yonu</button>
+                                </div>
+                                
+                                <div class="group">
+                                    <button type="button" id="7">Yazilim guncelle</button>
                                 </div>
                                 <div class="group">
-                                    <button type="button" id="5">Yazilim guncelle</button>
+                                    <button type="button" id="14" onclick="sendData(0,0,14,0)">hepsini resetleme</button>
+                                </div>
+                                <div class="group">
+                                  Yazılan flaş sayfası
+                                    <span id="flashPage"></span>
+                                </div>
+                                <div class="group">
+                                  Yazılım versiyon
+                                    <span id=""></span>
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    
                 </div>
             </div>
         </div>
@@ -194,45 +247,85 @@
     <footer>T3 Otomasyon &#169; Tüm haklar saklıdır.</footer>
     <script>
         //Get data from server
-        function getData() {
-            let xhttp = new XMLHttpRequest();
-            xhttp.onreadystatechange = function () {
-                if (this.readyState == 4 && this.status == 200) {
-            // var uid1 = "01";
-            // var uid2 = "02";
-            // var uid3 = "03";
-            // var did1 = "0001";
-            // var did2 = "0002";
-            // var did3 = "0003";
-            // var m = uid1 + "," + did1 + "/" + uid2 + "," + did2 + "/" + uid3 + "," + did3;
-            var devices = this.responseText;
-            var device = devices.split("/"); //Split the text of devices to an array
-            for (let i = 0; i < device.length; i++) {
-                deviceUid = device[i].split(","); //Split the Device Id and Unique Id
-            }
-            for (let i = 0; i < device.length; i++) {
-                var but = document.createElement("button");
-                for (let j = 0; j < device.length; j++) {
-                    var deviceUid = device[i].split(","); //Split the Device Id and Unique Id
-                    but.id = deviceUid[1]; //Set Id to buttons
-                    but.setAttribute("onclick", "openss(this.id)");
-                    var butpar = document.getElementById("no");
-                    butpar.appendChild(but);
-                    document.getElementById(deviceUid[1]).innerHTML = "UID = " + deviceUid[1] + "<br>" + "DID = " + deviceUid[0]; //Set content of button
+      
+    function getData() {
+    // let xhttp = new XMLHttpRequest();
+    // xhttp.onreadystatechange = function () {
+
+    //     if (this.readyState == 4 && this.status == 200) {
+
+            var uid1 = "01";
+            var uid2 = "02";
+            var uid3 = "03";
+            var did1 = "0001";
+            var did2 = "0002";
+            var did3 = "0003";
+            var m = "1." + uid1 + "," + did1 + "/" + uid2 + "," + did2 + "/" + uid3 + "," + did3;
+
+            var devices = m;
+            console.log(this.responseText);
+            var iId = devices.split(".");
+            if (iId[0] == '1') {
+                for (let i = 0; i < iId.length; i++) {
+                    var device = iId[1].split("/"); //Split the text of devices to an array
+                    for (let i = 0; i < device.length; i++) {
+                        deviceUid = device[i].split(","); //Split the Device Id and Unique Id
+                    }
                 }
-            };
-        }
-        };
-        xhttp.open("GET", "readADC", true);
-        xhttp.send();
-        }
+                for (let i = 0; i < device.length; i++) {
+                    var but = document.createElement("button");
+                    for (let j = 0; j < device.length; j++) {
+                        var deviceUid = device[i].split(","); //Split the Device Id and Unique Id
+                        but.id = deviceUid[0]; //Set Id to buttons
+                        but.class = deviceUid[1]; //Set class to buttons
+                        but.setAttribute("onclick", "openss(this.id, this.class)");
+                        var butpar = document.getElementById("no");
+                        butpar.appendChild(but);
+                        document.getElementById(deviceUid[0]).innerHTML = "UID = " + deviceUid[1] + "<br>" + "DID = " + deviceUid[0]; //Set content of button
+                    }
+                }
+            }
+            // else if(iId[0] == '2'){
+            //     if (iId[1] == '1') {
+            //         document.getElementById("bildir").innerHTML = "İşlem başarılı";
+            //         document.getElementById("bildir").style.color = "green";
+            //         location.reload();
+            //         sendData(0,0,1,0);
+            //     }
+                // else{
+                //     document.getElementById("bildir").innerHTML = "İşlem başarısız";
+                //     document.getElementById("bildir").style.color = "red";
+                // }
+            // }
+            else if(iId[0] == '3'){
+                if (iId[1] == '1') {
+                    document.getElementById("bildir").innerHTML = "İşlem başarılı";
+                    document.getElementById("bildir").style.color = "green";
+                  
+                }else{
+                    document.getElementById("bildir").innerHTML = "İşlem başarısız";
+                    document.getElementById("bildir").style.color = "red";
+                }
+            }
+            else if(iId[0] == '4'){
+                document.getElementById("flashPage").innerHTML = iId[1];
+            }
 
-        getData(); //Call getData()
+        // }
+    // };
+    // xhttp.open("GET", "readADC", true);
+    // xhttp.send();
+}
 
-        function openss(button) {
+
+       getData(); //Call getData()
+
+
+        function openss(uId, dId) {
             document.getElementById("myModal").style.display = "block"; //Show the modal
-            document.getElementById("uid").value = button; //Set device Id to hidden input
-            document.getElementById("devicehead").innerHTML = "UID = " + button; //Add head to modal
+            document.getElementById("uid").value = uId; //Set unique Id to hidden input
+            document.getElementById("did").value = dId; //Set device Id to hidden input
+            document.getElementById("devicehead").innerHTML = "UID = " + uId; //Add head to modal
         }
 
         //Close modal
@@ -254,37 +347,44 @@
         }
 
         //Call sendData()
-        document.getElementById("options").querySelectorAll('button').forEach(button => {
+        document.querySelectorAll('button').forEach(button => {
             button.addEventListener('click', () => {
                 let uid = document.getElementById("uid").value; //Get unique Id
-                let yuid = document.getElementById("yuid").value; //Get new unique Id
+                let did = document.getElementById("did").value; //Get device Id
+                
                 let ydid = document.getElementById("ydid").value; //Get new new device Id
                 let dyonu = document.getElementById("dyonu").checked; //Get display mode
+                let btip = document.querySelector('input[name="btip"]:checked').value;
 
-                if(button.id == 1){ //When device Id is changed
-                    sendData(uid, button.id, ydid);
-                }else if (button.id == 2) { //When unique Id is changed
-                    sendData(uid, button.id, yuid);
-                }else if (button.id == 4) { //When Display mode is clicked
-                    sendData(uid, button.id, dyonu);
-                } else { //When another button is clicked
-                    sendData(uid, button.id, 0);
+                if(button.id == 2){ //When device Id is changed
+                    sendData(uid, did, button.id, ydid);
+                    
+                }else if (button.id == 3) { //When unique Id is changed
+                     sendData(uid,did, 3, btip);
+                }else if (button.id == 4) { //When unique Id is changed
+                    sendData(uid,did, button.id, 0);
+                }else if (button.id == 5) { //When Display mode is clicked
+                  if(dyonu == true){ sendData(uid,did, button.id, 1);}
+                  else             { sendData(uid,did, button.id, 0);}
+                }else { //When another button is clicked
+                    sendData(uid,did, button.id, 0);
                 }
 
             });
         });
 
         //Send data to server
-        function sendData(Uid, TaskNum, InpVal) {
+        function sendData(Uid, Did, TaskNum, InpVal) {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     console.log(this.responseText);
                 }
             };
-            xhttp.open("GET", "set?Uid=" + Uid + "&TaskNumber=" + TaskNum + "&InputValue=" + InpVal, true);
+            xhttp.open("GET", "set?Uid=" + Uid + "&Did=" + Did + "&TaskNumber=" + TaskNum + "&InputValue=" + InpVal, true);
             xhttp.send();
         }
+        // setInterval(function(){getData()},1000);
     </script>
 
 </body>
